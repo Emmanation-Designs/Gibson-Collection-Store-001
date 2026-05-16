@@ -15,6 +15,16 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   // Define paths where search should be hidden
   const hideSearchPaths = ['/auth', '/admin/upload', '/profile', '/wishlist', '/categories', '/settings'];
   const showSearch = !hideSearchPaths.includes(location.pathname);
+  
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  if (isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-surface">
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pb-20 md:pb-0 bg-surface">

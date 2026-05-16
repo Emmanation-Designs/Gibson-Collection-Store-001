@@ -10,6 +10,10 @@ import { Profile } from './pages/Profile';
 import { Wishlist } from './pages/Wishlist';
 import { Categories } from './pages/Categories';
 import { Settings } from './pages/Settings';
+import { Orders } from './pages/Orders';
+import { AdminLayout } from './components/AdminLayout';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { AdminOrders } from './pages/AdminOrders';
 import { AdminFab } from './components/AdminFab';
 import { ToastContainer } from './components/ToastContainer';
 import { useStore } from './store/useStore';
@@ -94,9 +98,17 @@ const App: React.FC = () => {
           <Route path="/auth" element={<Auth />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/admin/upload" element={<Upload />} />
+          
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="upload" element={<Upload />} />
+          </Route>
+
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/orders" element={<Orders />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

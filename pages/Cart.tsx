@@ -55,9 +55,13 @@ export const Cart: React.FC = () => {
         console.error("Order error:", error);
         addToast("Failed to submit order. Please try again.", "error");
       } else {
-        addToast("Order placed successfully! We will contact you soon.", "success");
+        addToast("Order placed successfully! Monitor your order status in your profile.", "success");
         clearCart();
-        navigate('/');
+        if (user) {
+          navigate('/orders');
+        } else {
+          navigate('/');
+        }
       }
     } catch (err) {
       console.error(err);

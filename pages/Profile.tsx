@@ -10,7 +10,8 @@ import {
   Phone, 
   LayoutDashboard,
   ArrowLeft,
-  Settings
+  Settings,
+  Package
 } from 'lucide-react';
 import { ADMIN_EMAILS, WHATSAPP_NUMBER } from '../types';
 
@@ -116,6 +117,8 @@ export const Profile: React.FC = () => {
 
       {/* Settings Menu List */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        <MenuItem icon={Package} label="My Orders" to="/orders" />
+        <div className="h-px bg-gray-50 my-1"></div>
         <MenuItem icon={Heart} label="My Wishlist" to="/wishlist" />
         <div className="h-px bg-gray-50 my-1"></div>
         <MenuItem icon={Settings} label="Profile Settings" to="/settings" />

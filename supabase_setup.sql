@@ -113,6 +113,14 @@ CREATE POLICY "Admins can delete all orders"
     auth.email() IN ('gibsoncollections1@gmail.com', 'gibsoncollections2@gmail.com')
   );
 
+-- ==============================================================================
+-- Add Payment tracking to `orders` table
+-- ==============================================================================
+
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS payment_status text DEFAULT 'pending';
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS payment_reference text;
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS paid_at timestamptz;
+
 
 -- ==============================================================================
 -- Storage Bucket Setup for Product Images
