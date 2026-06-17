@@ -49,19 +49,15 @@ export const Cart: React.FC = () => {
         status: 'pending'
       };
 
-      const { error } = await supabase.from('orders').insert(orderData);
+      const { data, error } = await supabase.from('orders').insert(orderData).select('id').single();
 
-      if (error) {
+      if (error || !data) {
         console.error("Order error:", error);
         addToast("Failed to submit order. Please try again.", "error");
       } else {
-        addToast("Order placed successfully! Monitor your order status in your profile.", "success");
+        addToast("Order created successfully! Proceeding to payment.", "success");
         clearCart();
-        if (user) {
-          navigate('/orders');
-        } else {
-          navigate('/');
-        }
+        navigate(`/payment/${data.id}`);
       }
     } catch (err) {
       console.error(err);
@@ -227,7 +223,7 @@ export const Cart: React.FC = () => {
               ) : (
                 <>
                   <Rocket className="w-5 h-5" />
-                  Place Order Now
+                  Proceed to Payment
                 </>
               )}
             </button>

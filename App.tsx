@@ -11,6 +11,7 @@ import { Wishlist } from './pages/Wishlist';
 import { Categories } from './pages/Categories';
 import { Settings } from './pages/Settings';
 import { Orders } from './pages/Orders';
+import { Payment } from './pages/Payment';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminOrders } from './pages/AdminOrders';
@@ -97,6 +98,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/payment/:orderId" element={<Payment />} />
           <Route path="/categories" element={<Categories />} />
           
           <Route path="/admin" element={<AdminLayout />}>
