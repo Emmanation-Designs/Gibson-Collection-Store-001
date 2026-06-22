@@ -35,10 +35,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <Link to="/" className="flex items-center gap-3">
               <img 
                 src="/logo.png" 
-                alt="Gibson Collections" 
+                alt="Gibson Empire Essentials" 
                 className="h-12 w-12 object-cover rounded-full bg-white border border-gray-100" 
               />
-              <h1 className="text-xl font-bold text-primary hidden md:block">Gibson Collections</h1>
+              <h1 className="text-xl font-bold text-primary hidden md:block">Gibson Empire Essentials</h1>
             </Link>
 
             {/* Desktop Nav */}

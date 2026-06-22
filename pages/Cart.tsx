@@ -55,9 +55,13 @@ export const Cart: React.FC = () => {
         console.error("Order error:", error);
         addToast("Failed to submit order. Please try again.", "error");
       } else {
-        addToast("Order created successfully! Proceeding to payment.", "success");
+        addToast("Order placed successfully! Monitor your order status in your profile.", "success");
         clearCart();
-        navigate(`/payment/${data.id}`);
+        if (user) {
+          navigate('/orders');
+        } else {
+          navigate('/');
+        }
       }
     } catch (err) {
       console.error(err);
@@ -223,7 +227,7 @@ export const Cart: React.FC = () => {
               ) : (
                 <>
                   <Rocket className="w-5 h-5" />
-                  Proceed to Payment
+                  Place Order Now
                 </>
               )}
             </button>

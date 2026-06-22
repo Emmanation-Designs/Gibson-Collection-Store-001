@@ -65,7 +65,7 @@ export const Auth: React.FC = () => {
         if (error) throw error;
         if (data.user && data.user.email) {
             setUser({ id: data.user.id, email: data.user.email });
-            addToast("Account created successfully! Welcome to Gibson Collections.", "success");
+            addToast("Account created successfully! Welcome to Gibson Empire Essentials.", "success");
             navigate('/');
         }
       }
@@ -94,7 +94,7 @@ export const Auth: React.FC = () => {
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
-            {isLogin ? 'Login to continue shopping' : 'Join Gibson Collections today'}
+            {isLogin ? 'Login to continue shopping' : 'Join Gibson Empire Essentials today'}
           </p>
         </div>
 
@@ -158,7 +158,7 @@ export const Auth: React.FC = () => {
 
         <div className="mt-8 pt-6 border-t border-gray-100 text-center text-sm">
           <span className="text-gray-500">
-            {isLogin ? "New to Gibson Collections? " : "Already have an account? "}
+            {isLogin ? "New to Gibson Empire Essentials? " : "Already have an account? "}
           </span>
           <button
             onClick={() => setIsLogin(!isLogin)}

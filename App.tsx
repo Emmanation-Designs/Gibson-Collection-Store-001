@@ -11,7 +11,6 @@ import { Wishlist } from './pages/Wishlist';
 import { Categories } from './pages/Categories';
 import { Settings } from './pages/Settings';
 import { Orders } from './pages/Orders';
-import { Payment } from './pages/Payment';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminOrders } from './pages/AdminOrders';
@@ -84,7 +83,7 @@ const App: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="w-10 h-10 text-[#1e40af] animate-spin" />
-          <p className="text-gray-500 font-medium animate-pulse">Loading Gibson Collections...</p>
+          <p className="text-gray-500 font-medium animate-pulse">Loading Gibson Empire Essentials...</p>
         </div>
       </div>
     );
@@ -98,7 +97,6 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/payment/:orderId" element={<Payment />} />
           <Route path="/categories" element={<Categories />} />
           
           <Route path="/admin" element={<AdminLayout />}>

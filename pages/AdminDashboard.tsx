@@ -7,8 +7,8 @@ export const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState({
     totalOrders: 0,
     totalRevenue: 0,
-    pendingPayments: 0,
-    paidOrders: 0,
+    pendingOrders: 0,
+    deliveredOrders: 0,
   });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,19 +25,19 @@ export const AdminDashboard: React.FC = () => {
 
         if (orders) {
           const totalOrders = orders.length;
-          const paidOrdersArray = orders.filter(o => o.payment_status?.toLowerCase() === 'paid');
-          const paidOrders = paidOrdersArray.length;
-          const pendingPayments = orders.filter(o => o.payment_status?.toLowerCase() === 'pending').length;
+          const nonCancelledOrders = orders.filter(o => o.status !== 'cancelled');
+          const pendingOrders = orders.filter(o => o.status === 'pending').length;
+          const deliveredOrders = orders.filter(o => o.status === 'delivered').length;
           
-          const totalRevenue = paidOrdersArray.reduce((sum, order) => {
+          const totalRevenue = nonCancelledOrders.reduce((sum, order) => {
             return sum + (Number(order.total) || 0);
           }, 0);
 
           setStats({
             totalOrders,
             totalRevenue,
-            pendingPayments,
-            paidOrders,
+            pendingOrders,
+            deliveredOrders,
           });
 
           setRecentOrders(orders.slice(0, 5));
@@ -61,10 +61,10 @@ export const AdminDashboard: React.FC = () => {
   }
 
   const statCards = [
-    { label: 'Total Revenue (Paid)', value: `₦${stats.totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
+    { label: 'Total Revenue', value: `₦${stats.totalRevenue.toLocaleString()}`, icon: DollarSign, color: 'text-green-600', bg: 'bg-green-100' },
     { label: 'Total Orders', value: stats.totalOrders, icon: ShoppingBag, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { label: 'Paid Orders', value: stats.paidOrders, icon: CreditCard, color: 'text-emerald-600', bg: 'bg-emerald-100' },
-    { label: 'Pending Payments', value: stats.pendingPayments, icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    { label: 'Delivered Orders', value: stats.deliveredOrders, icon: CreditCard, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+    { label: 'Pending Orders', value: stats.pendingOrders, icon: Clock, color: 'text-yellow-600', bg: 'bg-yellow-100' },
   ];
 
   return (
@@ -101,14 +101,13 @@ export const AdminDashboard: React.FC = () => {
                 <th className="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
                 <th className="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                 <th className="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                <th className="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Payment</th>
                 <th className="px-6 py-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {recentOrders.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">No orders found.</td>
+                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">No orders found.</td>
                 </tr>
               ) : (
                 recentOrders.map((order) => (
@@ -119,15 +118,6 @@ export const AdminDashboard: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">
                       ₦{Number(order.total).toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${
-                        order.payment_status === 'paid' ? 'bg-green-100 text-green-800' :
-                        order.payment_status === 'failed' ? 'bg-red-100 text-red-800' :
-                        'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {order.payment_status || 'pending'}
-                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize bg-gray-100 text-gray-800">

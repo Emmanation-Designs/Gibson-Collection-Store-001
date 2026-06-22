@@ -59,7 +59,7 @@ export const Profile: React.FC = () => {
   }
 
   // Determine Display Name and Avatar
-  const displayName = user.full_name || 'Gibson Customer';
+  const displayName = user.full_name || 'Gibson Empire Customer';
   const displayAvatar = user.avatar_url;
 
   return (
@@ -144,7 +144,7 @@ export const Profile: React.FC = () => {
       </button>
       
       <p className="text-center text-xs text-gray-400 mt-6">
-        Gibson Collections v1.1.0
+        Gibson Empire Essentials v1.1.0
       </p>
     </div>
   );
