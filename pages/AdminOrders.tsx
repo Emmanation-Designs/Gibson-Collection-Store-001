@@ -66,7 +66,7 @@ export const AdminOrders: React.FC = () => {
           <input 
             type="text" 
             placeholder="Search ID, phone, address..." 
-            className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] outline-none min-w-[250px]"
+            className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#ca4c1b] outline-none min-w-[250px]"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -113,7 +113,7 @@ export const AdminOrders: React.FC = () => {
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => setSelectedOrder(order)}
-                        className="text-[#1e40af] hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-lg text-sm font-medium transition"
+                        className="text-[#ca4c1b] hover:text-orange-850 bg-orange-50 px-3 py-1.5 rounded-lg text-sm font-medium transition"
                       >
                         View
                       </button>
@@ -172,7 +172,7 @@ export const AdminOrders: React.FC = () => {
                 
                 <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                   <span className="font-medium text-gray-500">Total</span>
-                  <span className="text-xl font-black text-[#1e40af]">₦{Number(selectedOrder.total).toLocaleString()}</span>
+                  <span className="text-xl font-black text-[#ca4c1b]">₦{Number(selectedOrder.total).toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -188,7 +188,7 @@ export const AdminOrders: React.FC = () => {
                     disabled={selectedOrder.status === status}
                     className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition ${
                       selectedOrder.status === status 
-                        ? 'bg-[#1e40af] text-white cursor-default' 
+                        ? 'bg-[#ca4c1b] text-white cursor-default' 
                         : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
                     }`}
                   >

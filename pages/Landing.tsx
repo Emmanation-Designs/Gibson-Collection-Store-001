@@ -108,35 +108,35 @@ export const Landing: React.FC = () => {
       {/* 1. HERO SECTION */}
       <section className="relative rounded-3xl overflow-hidden bg-primary shadow-xl min-h-[60vh] md:min-h-[70vh] flex items-center">
         {/* Modern Premium Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#121d45] z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#121d45] z-0"></div>
         
         {/* Soft Pink and Blue Ambient Lights */}
         <div className="absolute -top-10 -right-10 w-96 h-96 bg-rose-400/20 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-blue-300/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-orange-300/20 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full p-8 md:p-16 gap-8">
           {/* Hero Content text */}
           <div className="max-w-2xl text-center md:text-left space-y-6 flex-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-blue-50 text-xs font-semibold tracking-wide uppercase backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-orange-50 text-xs font-semibold tracking-wide uppercase backdrop-blur-sm">
               <Sparkles className="w-3.5 h-3.5 text-amber-200" />
               Welcome to Pure Luxury
             </div>
             
             <h1 className="text-4xl md:text-6xl font-black leading-tight text-white tracking-tight">
               Gentle Care for <br />
-              <span className="text-[#60a5fa]">Your Precious One</span>
+              <span className="text-orange-200">Your Precious One</span>
             </h1>
             
-            <p className="text-blue-100/90 text-lg md:text-xl leading-relaxed font-light max-w-lg mx-auto md:mx-0">
-              Surround your baby in absolute luxury and natural comfort. Our collections offer unmatched excellence in daily care, premium diapering, and soft organic clothing.
+            <p className="text-orange-50/90 text-lg md:text-xl leading-relaxed font-light max-w-lg mx-auto md:mx-0">
+               Surround your baby in absolute luxury and natural comfort. Our collections offer unmatched excellence in daily care, premium diapering, and soft organic clothing.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
               <Link 
                 to="/store"
-                className="bg-white text-[#1e40af] px-8 py-4 rounded-full font-extrabold hover:bg-blue-50 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 text-md"
+                className="bg-white text-[#ca4c1b] px-8 py-4 rounded-full font-extrabold hover:bg-orange-50 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 text-md"
               >
-                Shop Now <ArrowRight className="w-5 h-5 text-[#1e40af]" />
+                Shop Now <ArrowRight className="w-5 h-5 text-[#ca4c1b]" />
               </Link>
               <Link 
                 to="/about"
@@ -254,7 +254,7 @@ export const Landing: React.FC = () => {
                     </h4>
                   </div>
                   <div className="flex items-center justify-between mt-1">
-                    <span className="text-md font-black text-[#1e40af]">
+                    <span className="text-md font-black text-[#ca4c1b]">
                       ₦{product.price.toLocaleString()}
                     </span>
                     <span className="text-xs font-bold text-primary flex items-center gap-1 group-hover:underline">
@@ -283,8 +283,8 @@ export const Landing: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {whyChooseUs.map((pillar, idx) => (
             <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition">
-              <div className="w-12 h-12 bg-blue-50 text-primary rounded-full flex items-center justify-center">
-                <pillar.icon className="w-6 h-6 text-[#1e40af]" />
+              <div className="w-12 h-12 bg-orange-50 text-primary rounded-full flex items-center justify-center">
+                <pillar.icon className="w-6 h-6 text-[#ca4c1b]" />
               </div>
               <h3 className="text-lg font-bold text-gray-900">{pillar.title}</h3>
               <p className="text-xs text-gray-500 tracking-wide leading-relaxed font-medium">
@@ -296,9 +296,9 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* 5. GENTLE STORIES / OUR HERO WORK */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-[#1e40af]/5 rounded-3xl p-8 md:p-16 border border-[#1e40af]/10">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-[#ca4c1b]/5 rounded-3xl p-8 md:p-16 border border-[#ca4c1b]/10">
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1e40af]/10 text-primary text-xs font-bold tracking-wider uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ca4c1b]/10 text-primary text-xs font-bold tracking-wider uppercase">
             Our Loving Story
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight">
@@ -330,13 +330,13 @@ export const Landing: React.FC = () => {
             </Link>
           </div>
         </div>
-        <div className="relative rounded-2xl overflow-hidden h-[450px]">
+        <div className="relative rounded-2xl overflow-hidden h-[450px] bg-white flex items-center justify-center p-12 border border-gray-100">
           <img 
-            src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800" 
+            src="/logo.png" 
             alt="Gibson Mommy Baby Care" 
-            className="w-full h-full object-cover object-center" 
+            className="w-full h-full object-contain" 
           />
-          <div className="absolute inset-0 bg-[#1e40af]/10"></div>
+          <div className="absolute inset-0 bg-[#ca4c1b]/5 pointer-events-none"></div>
         </div>
       </section>
 
@@ -365,41 +365,6 @@ export const Landing: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* 7. NEWSLETTER SIGNUP */}
-      <section className="relative rounded-3xl overflow-hidden bg-primary shadow-xl">
-        {/* Dynamic Blue Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] to-[#121d45] z-0"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-300/10 to-transparent z-0"></div>
-        
-        <div className="relative z-10 py-16 px-6 md:p-16 text-center max-w-3xl mx-auto space-y-6">
-          <Mail className="w-12 h-12 text-[#60a5fa] mx-auto opacity-90 animate-bounce" />
-          <h2 className="text-3xl font-extrabold text-white leading-tight">Join the Gibson Essentials Club</h2>
-          <p className="text-blue-100 font-light text-md max-w-md mx-auto">
-            Subscribe now to receive exclusive child care blogs, nursery design tips, and 10% off your direct order!
-          </p>
-          
-          <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input 
-              type="email" 
-              placeholder="Enter your email address..." 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-grow px-5 py-3.5 rounded-full bg-white text-gray-900 border-none outline-none focus:ring-2 focus:ring-[#60a5fa] placeholder-gray-400 text-sm"
-              required
-            />
-            <button 
-              type="submit" 
-              disabled={submittingNewsletter}
-              className="bg-[#1e40af] text-white hover:bg-blue-800 border-2 border-white px-8 py-3.5 rounded-full font-bold transition flex items-center justify-center gap-2 text-sm"
-            >
-              {submittingNewsletter ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : 'Subscribe Now'}
-            </button>
-          </form>
         </div>
       </section>
 

@@ -86,7 +86,7 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-10 h-10 text-[#1e40af] animate-spin" />
+          <Loader2 className="w-10 h-10 text-[#ca4c1b] animate-spin" />
           <p className="text-gray-500 font-medium animate-pulse">Loading Gibson Empire Essentials...</p>
         </div>
       </div>

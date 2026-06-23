@@ -8,10 +8,10 @@ export const About: React.FC = () => {
       
       {/* Hero Banner / Header */}
       <section className="relative rounded-3xl overflow-hidden bg-primary shadow-lg min-h-[35vh] flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#121d45] z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#121d45] z-0"></div>
         <div className="absolute top-0 right-0 w-80 h-80 bg-rose-400/10 rounded-full blur-[80px] pointer-events-none"></div>
         <div className="relative z-10 p-8 md:p-16 max-w-2xl text-white space-y-4">
-          <span className="text-[#60a5fa] text-xs font-bold uppercase tracking-widest block">Our Heritage</span>
+          <span className="text-orange-200 text-xs font-bold uppercase tracking-widest block">Our Heritage</span>
           <h1 className="text-4xl font-extrabold tracking-tight">Our Story & Commitment</h1>
           <p className="text-blue-100 font-light leading-relaxed text-md md:text-lg">
             Dedicated to pure fabric materials, rigorous organic safety tests, and ultimate baby luxury since inception.
@@ -31,11 +31,11 @@ export const About: React.FC = () => {
           </p>
           <div className="grid grid-cols-2 gap-6 pt-4 border-t border-gray-100">
             <div>
-              <h4 className="text-3xl font-black text-[#1e40af]">100%</h4>
+              <h4 className="text-3xl font-black text-[#ca4c1b]">100%</h4>
               <p className="text-xs text-gray-500 font-bold uppercase mt-1">Hypoallergenic Fabrics</p>
             </div>
             <div>
-              <h4 className="text-3xl font-black text-[#1e40af]">15k+</h4>
+              <h4 className="text-3xl font-black text-[#ca4c1b]">15k+</h4>
               <p className="text-xs text-gray-500 font-bold uppercase mt-1">Happy Parents Served</p>
             </div>
           </div>
@@ -46,7 +46,7 @@ export const About: React.FC = () => {
             alt="Gibson Empire Essentials Story" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#1e40af]/10"></div>
+          <div className="absolute inset-0 bg-[#ca4c1b]/10"></div>
         </div>
       </section>
 
@@ -60,8 +60,8 @@ export const About: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-3">
-            <div className="w-10 h-10 bg-blue-50 text-primary rounded-xl flex items-center justify-center">
-              <ShieldCheck className="w-5 h-5 text-[#1e40af]" />
+            <div className="w-10 h-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 text-[#ca4c1b]" />
             </div>
             <h3 className="text-lg font-bold text-gray-900">1. Certified Safety</h3>
             <p className="text-xs text-gray-500 font-medium leading-relaxed">
@@ -92,17 +92,17 @@ export const About: React.FC = () => {
       </section>
 
       {/* Call to Action bar */}
-      <section className="bg-[#1e40af] text-white rounded-3xl p-8 md:p-12 text-center space-y-6">
+      <section className="bg-[#ca4c1b] text-white rounded-3xl p-8 md:p-12 text-center space-y-6">
         <h2 className="text-2xl md:text-3xl font-extrabold">Ready to Discover Absolute Comfort?</h2>
-        <p className="text-blue-100 max-w-lg mx-auto font-light text-sm md:text-base">
+        <p className="text-orange-100 max-w-lg mx-auto font-light text-sm md:text-base">
           Browse through our premium catalogs including Diapering, Feeding, luxury baby garments, and accessories!
         </p>
         <div>
           <Link 
             to="/store"
-            className="bg-white text-[#1e40af] px-8 py-3.5 rounded-full font-extrabold hover:bg-blue-50 transition shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2"
+            className="bg-white text-[#ca4c1b] px-8 py-3.5 rounded-full font-extrabold hover:bg-orange-50 transition shadow-md hover:-translate-y-0.5 inline-flex items-center gap-2"
           >
-            Go To Full Store <ChevronRight className="w-4 h-4 text-[#1e40af]" />
+            Go To Full Store <ChevronRight className="w-4 h-4 text-[#ca4c1b]" />
           </Link>
         </div>
       </section>

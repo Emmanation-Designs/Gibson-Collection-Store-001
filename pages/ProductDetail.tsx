@@ -220,7 +220,7 @@ Please confirm availability and coordinates. Thank you!`;
         <p className="text-gray-500 mb-8">{error || 'This item could not be retrieved from the store catalog.'}</p>
         <Link 
           to="/store" 
-          className="inline-flex items-center gap-2 bg-[#1e40af] hover:bg-blue-800 text-white font-bold px-6 py-3 rounded-full shadow-md transition"
+          className="inline-flex items-center gap-2 bg-[#ca4c1b] hover:bg-orange-850 text-white font-bold px-6 py-3 rounded-full shadow-md transition"
         >
           <ArrowLeft className="w-5 h-5" />
           Return to Store
@@ -298,7 +298,7 @@ Please confirm availability and coordinates. Thank you!`;
                   onClick={() => setSelectedImageIndex(idx)}
                   className={`w-20 h-20 rounded-xl bg-gray-50 border-2 overflow-hidden flex-shrink-0 transition-all ${
                     selectedImageIndex === idx 
-                      ? 'border-[#1e40af] scale-95 ring-4 ring-blue-50' 
+                      ? 'border-[#ca4c1b] scale-95 ring-4 ring-orange-50' 
                       : 'border-gray-100 hover:border-gray-300'
                   }`}
                 >
@@ -480,7 +480,7 @@ Please confirm availability and coordinates. Thank you!`;
             {!isDescExpanded && product.description && product.description.length > 150 && (
               <button
                 onClick={() => setIsDescExpanded(true)}
-                className="text-xs font-extrabold text-[#111827] hover:text-[#1e40af] transition mt-1 uppercase tracking-wider"
+                className="text-xs font-extrabold text-[#111827] hover:text-[#ca4c1b] transition mt-1 uppercase tracking-wider"
               >
                 Read full details...
               </button>
@@ -731,7 +731,7 @@ Please confirm availability and coordinates. Thank you!`;
                 <button
                   type="submit"
                   disabled={isSubmittingReview}
-                  className="w-full h-12 bg-[#1e40af] hover:bg-blue-800 text-white font-bold rounded-xl transition flex items-center justify-center gap-2 text-xs shadow-md shadow-blue-905/10 disabled:opacity-50"
+                  className="w-full h-12 bg-[#ca4c1b] hover:bg-orange-850 text-white font-bold rounded-xl transition flex items-center justify-center gap-2 text-xs shadow-md shadow-orange-950/10 disabled:opacity-50"
                 >
                   {isSubmittingReview ? (
                     <>

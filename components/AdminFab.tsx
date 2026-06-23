@@ -18,7 +18,7 @@ export const AdminFab: React.FC = () => {
   return (
     <Link 
       to="/admin/dashboard"
-      className="fixed bottom-20 md:bottom-8 right-6 z-40 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-blue-800 transition-transform hover:scale-105 flex items-center justify-center"
+      className="fixed bottom-20 md:bottom-8 right-6 z-40 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-[#b83d14] transition-transform hover:scale-105 flex items-center justify-center"
       aria-label="Admin Dashboard"
     >
       <LayoutDashboard className="w-6 h-6" />

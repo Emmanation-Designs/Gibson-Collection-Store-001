@@ -26,8 +26,19 @@ export const Contact: React.FC = () => {
     }
 
     setSubmitting(true);
+
+    const messageTemplate = `Hello Gibson Empire Essentials! I have a new contact message:
+👤 *Name*: ${formData.name}
+📧 *Email*: ${formData.email}
+📝 *Subject*: ${formData.subject || 'None'}
+💬 *Message*: ${formData.message}`;
+
+    const encodedText = encodeURIComponent(messageTemplate);
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+
     setTimeout(() => {
-      addToast('Thank you for contacting Gibson Empire Essentials! Our team will reach back within 24 hours.', 'success');
+      addToast('Redirecting to WhatsApp to send message...', 'success');
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       setFormData({
         name: '',
         email: '',
@@ -35,7 +46,7 @@ export const Contact: React.FC = () => {
         message: ''
       });
       setSubmitting(false);
-    }, 1000);
+    }, 800);
   };
 
   return (
@@ -43,10 +54,10 @@ export const Contact: React.FC = () => {
       
       {/* Structural Hero Banner */}
       <section className="relative rounded-3xl overflow-hidden bg-primary shadow-lg min-h-[35vh] flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#121d45] z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#121d45] z-0"></div>
         <div className="absolute top-0 right-0 w-80 h-80 bg-rose-400/10 rounded-full blur-[80px] pointer-events-none"></div>
         <div className="relative z-10 p-8 md:p-16 max-w-2xl text-white space-y-4">
-          <span className="text-[#60a5fa] text-xs font-bold uppercase tracking-widest block">Get in Touch</span>
+          <span className="text-orange-200 text-xs font-bold uppercase tracking-widest block">Get in Touch</span>
           <h1 className="text-4xl font-extrabold tracking-tight">We are Here to Support You</h1>
           <p className="text-blue-100 font-light leading-relaxed text-md md:text-lg">
             Have questions about sizes, fabrics, fast deliveries, or orders? Contact our specialized parents-care team.
@@ -60,8 +71,8 @@ export const Contact: React.FC = () => {
         {/* Left column: Info Cards */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-gray-105 shadow-sm space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-primary text-xs font-bold uppercase">
-              <Sparkles className="w-3 h-3 text-[#1e40af]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-primary text-xs font-bold uppercase">
+              <Sparkles className="w-3 h-3 text-[#ca4c1b]" />
               Always Connected
             </div>
             <h2 className="text-2xl font-bold text-gray-900 pt-2">Our Channels</h2>
@@ -73,8 +84,8 @@ export const Contact: React.FC = () => {
           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm space-y-6">
             {/* Phone */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-blue-50 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-[#1e40af]" />
+              <div className="w-10 h-10 bg-orange-50 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                <Phone className="w-5 h-5 text-[#ca4c1b]" />
               </div>
               <div>
                 <h4 className="font-bold text-gray-800 text-sm">Call / WhatsApp</h4>
@@ -83,7 +94,7 @@ export const Contact: React.FC = () => {
                   href={`https://wa.me/${WHATSAPP_NUMBER}`}
                   target="_blank"
                   referrerPolicy="no-referrer"
-                  className="text-xs text-[#1e40af] font-bold hover:underline mt-1.5 block"
+                  className="text-xs text-[#ca4c1b] font-bold hover:underline mt-1.5 block"
                 >
                   Direct WhatsApp Chat &rarr;
                 </a>
@@ -97,8 +108,8 @@ export const Contact: React.FC = () => {
               </div>
               <div>
                 <h4 className="font-bold text-gray-800 text-sm">Email Support</h4>
-                <p className="text-xs text-gray-400 mt-1">support@gibsonempireessentials.com</p>
-                <span className="text-xs text-gray-500 font-medium block mt-1">24 Hour response timeframe</span>
+                <p className="text-xs text-gray-500 mt-1">gibsonempireessentials@gmail.com</p>
+                <span className="text-xs text-gray-400 font-medium block mt-1">24 Hour response timeframe</span>
               </div>
             </div>
 
@@ -108,9 +119,9 @@ export const Contact: React.FC = () => {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-gray-800 text-sm">Headquarters</h4>
+                <h4 className="font-bold text-gray-800 text-sm">Our Location</h4>
                 <p className="text-xs text-gray-500 leading-relaxed mt-1">
-                  Plot 15, Gibson Empire Boulevard, Lekki Phase 1, Lagos, Nigeria.
+                  Saka bisiolu complex, ojuore market, oppositre under bridge. shop 123, ogun state, nigeria
                 </p>
               </div>
             </div>
@@ -121,7 +132,7 @@ export const Contact: React.FC = () => {
         <div className="lg:col-span-2 bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6">
           <div className="space-y-1">
             <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-[#1e40af]" /> Send us a Message
+              <MessageSquare className="w-5 h-5 text-[#ca4c1b]" /> Send us a Message
             </h3>
             <p className="text-sm text-gray-500 font-medium">Have something to ask? Please use the secure form below.</p>
           </div>
@@ -183,7 +194,7 @@ export const Contact: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="bg-[#1e40af] hover:bg-blue-800 text-white font-bold py-3.5 px-8 rounded-xl transition shadow flex items-center justify-center gap-2 ml-auto cursor-pointer"
+              className="bg-[#ca4c1b] hover:bg-orange-850 text-white font-bold py-3.5 px-8 rounded-xl transition shadow flex items-center justify-center gap-2 ml-auto cursor-pointer"
             >
               {submitting ? (
                 <>

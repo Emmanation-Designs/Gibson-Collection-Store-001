@@ -238,7 +238,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete, onC
 
           <button 
             onClick={handleAddToCart}
-            className="w-10 h-10 rounded-full bg-blue-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 group-hover:bg-primary group-hover:text-white"
+            className="w-10 h-10 rounded-full bg-orange-50 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md active:scale-95 group-hover:bg-primary group-hover:text-white"
             aria-label="Add to cart"
           >
             <ShoppingCart className="w-5 h-5" />

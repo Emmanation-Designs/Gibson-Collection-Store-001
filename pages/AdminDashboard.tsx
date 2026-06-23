@@ -55,7 +55,7 @@ export const AdminDashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#1e40af] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-10 h-10 border-4 border-[#ca4c1b] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -90,7 +90,7 @@ export const AdminDashboard: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="px-6 py-5 border-b border-gray-100 flex justify-between items-center">
           <h2 className="text-lg font-bold text-gray-900">Recent Orders</h2>
-          <Link to="/admin/orders" className="text-sm font-medium text-[#1e40af] hover:text-blue-800 flex items-center gap-1">
+          <Link to="/admin/orders" className="text-sm font-medium text-[#ca4c1b] hover:text-orange-850 flex items-center gap-1">
             View All <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

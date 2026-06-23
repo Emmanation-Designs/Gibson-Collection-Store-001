@@ -1,8 +1,26 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useStore } from '../store/useStore';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Home, User, LayoutGrid, Search, LogIn, ShoppingBag, Globe, Phone, Info } from 'lucide-react';
+import { 
+  ShoppingCart, 
+  Home, 
+  User, 
+  LayoutGrid, 
+  Search, 
+  LogIn, 
+  ShoppingBag, 
+  Globe, 
+  Phone, 
+  Info, 
+  Mail, 
+  MapPin, 
+  Shield, 
+  FileText, 
+  Cookie, 
+  X,
+  Sparkles
+} from 'lucide-react';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { cart, user, setSearchQuery, searchQuery } = useStore();
@@ -20,6 +38,8 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   
   const isAdminRoute = location.pathname.startsWith('/admin');
 
+  const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | 'cookies' | null>(null);
+
   if (isAdminRoute) {
     return (
       <div className="min-h-screen bg-surface">
@@ -29,7 +49,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   }
 
   return (
-    <div className="min-h-screen pb-20 md:pb-0 bg-surface">
+    <div className="min-h-screen pb-20 md:pb-0 bg-surface flex flex-col">
       {/* Desktop/Mobile Header */}
       <header className="sticky top-0 z-50 bg-white shadow-sm">
         <div className="container mx-auto px-4 py-3">
@@ -56,7 +76,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 <>
                   <Link to="/" className={`hover:text-primary font-semibold text-sm transition ${location.pathname === '/' ? 'text-primary' : ''}`}>Home</Link>
                   <Link to="/about" className={`hover:text-primary font-semibold text-sm transition ${location.pathname === '/about' ? 'text-primary' : ''}`}>About Us</Link>
-                  <Link to="/store" className="bg-[#1e40af] hover:bg-blue-800 text-white px-4 py-1.5 rounded-full font-bold text-sm transition flex items-center gap-1.5 shadow-sm">
+                  <Link to="/store" className="bg-[#ca4c1b] hover:bg-orange-850 text-white px-4 py-1.5 rounded-full font-bold text-sm transition flex items-center gap-1.5 shadow-sm">
                     <ShoppingBag className="w-4 h-4" />
                     <span>Shop Store</span>
                   </Link>
@@ -83,7 +103,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 </Link>
               ) : (
                 <Link to="/auth" className="flex items-center gap-2 text-primary font-bold border border-primary px-3.5 py-1 rounded-full hover:bg-blue-50 transition text-sm">
-                  <LogIn className="w-4 h-4" />
+                  <LogIn className="w-4 h-4 text-primary" />
                   <span>Login / Signup</span>
                 </Link>
               )}
@@ -115,9 +135,202 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-6 flex-grow">
         {children}
       </main>
+
+      {/* Footer Section */}
+      <footer className="bg-[#ca4c1b] text-orange-100 pt-16 pb-24 md:pb-12 mt-auto border-t border-orange-850/40 relative z-10 font-sans">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
+            
+            {/* Column 1: Info & Brand */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <img 
+                  src="/logo.png" 
+                  alt="Gibson Empire Essentials" 
+                  className="w-10 h-10 object-cover rounded-full bg-white border border-orange-900/30" 
+                />
+                <span className="font-extrabold text-white text-md tracking-tight">Gibson Empire Essentials</span>
+              </div>
+              <p className="text-xs text-orange-100/85 leading-relaxed font-medium">
+                Pure fabric materials, strict organic safety tests, and ultimate baby luxury. Where Quality Meets Affection. Delivering daily nursery essentials straight to your family's doorstep.
+              </p>
+              <div className="flex items-center gap-1 text-[10px] text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20 w-fit">
+                <Sparkles className="w-3 h-3 fill-current" />
+                <span>Premium Quality Vetted</span>
+              </div>
+            </div>
+
+            {/* Column 2: Explore */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Explore</h4>
+              <ul className="space-y-2 text-xs font-semibold">
+                <li>
+                  <Link to="/" className="text-orange-100/90 hover:text-white transition duration-200 block">Home</Link>
+                </li>
+                <li>
+                  <Link to="/about" className="text-orange-100/90 hover:text-white transition duration-200 block">Our Mission & About</Link>
+                </li>
+                <li>
+                  <Link to="/store" className="text-orange-100/90 hover:text-white transition duration-200 block">How it Works & Store</Link>
+                </li>
+                <li>
+                  <Link to="/store" className="hover:text-white transition duration-200 block font-bold text-yellow-300">Our Premium Services</Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Legal stuff */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Legal Notice</h4>
+              <div className="space-y-2 text-xs font-semibold flex flex-col items-start">
+                <button 
+                  onClick={() => setLegalModal('privacy')}
+                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                >
+                  Privacy Policy
+                </button>
+                <button 
+                  onClick={() => setLegalModal('terms')}
+                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                >
+                  Terms of Service
+                </button>
+                <button 
+                  onClick={() => setLegalModal('cookies')}
+                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                >
+                  Cookie Settings
+                </button>
+              </div>
+            </div>
+
+            {/* Column 4: Contact / Reach Out */}
+            <div className="space-y-4">
+              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Reach Out</h4>
+              <ul className="space-y-3.5 text-xs font-medium">
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                  <span className="text-orange-100/85 leading-relaxed">
+                    Saka bisiolu complex, ojuore market, oppositre under bridge. shop 123, ogun state, nigeria
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Mail className="w-4 h-4 text-white shrink-0" />
+                  <a href="mailto:gibsonempireessentials@gmail.com" className="text-orange-100/85 hover:text-white transition truncate">
+                    gibsonempireessentials@gmail.com
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <Phone className="w-4 h-4 text-white shrink-0" />
+                  <a href="https://wa.me/2348033464218" target="_blank" className="text-orange-100/85 hover:text-white transition">
+                    +234 803 346 4218
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <hr className="border-orange-850/50 my-8" />
+
+          {/* Copyright line */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-orange-200/70 font-medium">
+            <p>&copy; {new Date().getFullYear()} Gibson Empire Essentials. All rights reserved.</p>
+            <p className="flex items-center gap-1.5 bg-orange-950/20 px-3 py-1.5 rounded-lg text-white">
+              Designed with Affection & Premium Family Care
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Interactive Compliance legal modal */}
+      {legalModal && (
+        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-250">
+          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100 flex flex-col animate-in zoom-in-95 duration-200">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-5 border-b border-gray-50 bg-[#ca4c1b] text-white">
+              <div className="flex items-center gap-2.5">
+                {legalModal === 'privacy' && <Shield className="w-5 h-5 text-white" />}
+                {legalModal === 'terms' && <FileText className="w-5 h-5 text-white" />}
+                {legalModal === 'cookies' && <Cookie className="w-5 h-5 text-white" />}
+                
+                <h3 className="font-extrabold text-sm md:text-md uppercase tracking-wider">
+                  {legalModal === 'privacy' && 'Privacy Policy'}
+                  {legalModal === 'terms' && 'Terms of Service'}
+                  {legalModal === 'cookies' && 'Cookie Settings'}
+                </h3>
+              </div>
+              <button 
+                onClick={() => setLegalModal(null)}
+                className="p-1 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body Content */}
+            <div className="p-6 overflow-y-auto max-h-[60vh] text-xs md:text-sm text-gray-600 leading-relaxed space-y-4">
+              {legalModal === 'privacy' && (
+                <>
+                  <p className="font-bold text-gray-900">Last updated: June 2026</p>
+                  <p>
+                    At Gibson Empire Essentials, your family's privacy and skin comfort is our absolute priority. We collect only necessary user data to safely process and manage your premium baby care orders. This consists of your delivery addresses, name details, contact emails, and phone channels.
+                  </p>
+                  <p>
+                    We protect all account records using modern encryption methods, and we never rent or provide family databases to third party agencies.
+                  </p>
+                  <p>
+                    Feel free to contact us at <strong>gibsonempireessentials@gmail.com</strong> if you wish to review, update, or safely request deletion of any of your details.
+                  </p>
+                </>
+              )}
+              
+              {legalModal === 'terms' && (
+                <>
+                  <p className="font-bold text-gray-900">Last updated: June 2026</p>
+                  <p>
+                    By visiting and conducting purchases on the Gibson Empire Essentials catalog, you agree to comply with our commercial terms:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1.5 mt-2">
+                    <li>All pricing listed is presented in Nigerian Naira (₦).</li>
+                    <li>Nursery and baby clothes stocks are updated in real-time, subject to material availability.</li>
+                    <li>Replacements for standard package orders are fully eligible for processing within 7 days.</li>
+                    <li>Copying assets or branding photos of our catalog constitutes copyright infringement.</li>
+                  </ul>
+                </>
+              )}
+
+              {legalModal === 'cookies' && (
+                <>
+                  <p className="font-bold text-gray-900">Usage of Cookies</p>
+                  <p>
+                    We use cookies and web key-value caches to maintain your shopping cart items, preserve your active sessions, and personalize your experience. No confidential identity records are tracked.
+                  </p>
+                  <p className="mt-2 text-[11px] text-gray-400">
+                    Your choice is completely saved locally. Clear cache at any time to resets.
+                  </p>
+                </>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+              <button 
+                onClick={() => setLegalModal(null)}
+                className="bg-primary hover:bg-[#b83d14] text-white font-bold px-5 py-2.5 rounded-xl text-xs transition"
+              >
+                Acknowledge
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* Mobile Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-6 flex justify-between items-center md:hidden z-50">

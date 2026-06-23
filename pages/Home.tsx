@@ -124,13 +124,13 @@ export const Home: React.FC = () => {
           {selectedCategory === 'All' && (
             <div className="relative rounded-3xl overflow-hidden bg-primary shadow-xl">
               {/* Modern Gradient Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1e40af] via-[#1e3a8a] to-[#172554] z-0"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#172554] z-0"></div>
               
               {/* Decorative Glows */}
               {/* Soft Pink glow to match baby image */}
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-400/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 z-0 pointer-events-none"></div>
-              {/* Blue glow for depth */}
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-400/20 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4 z-0 pointer-events-none"></div>
+              {/* Warm orange glow for depth */}
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-orange-400/20 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4 z-0 pointer-events-none"></div>
 
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between">
                 
