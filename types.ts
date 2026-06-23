@@ -16,6 +16,17 @@ export interface CartItem extends Product {
   selectedColor?: string; // The specific color user chose
 }
 
+export interface Review {
+  id: string;
+  product_id: string;
+  user_id: string;
+  reviewer_name: string;
+  rating: number; // 1-5
+  title?: string;
+  review_text: string;
+  created_at: string;
+}
+
 export interface UserProfile {
   id: string;
   email: string;

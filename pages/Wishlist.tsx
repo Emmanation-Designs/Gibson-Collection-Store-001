@@ -64,7 +64,7 @@ export const Wishlist: React.FC = () => {
           </div>
           <h2 className="text-xl font-bold text-gray-800 mb-2">Your wishlist is empty</h2>
           <p className="text-gray-500 mb-6">Save items you love here to buy them later.</p>
-          <Link to="/" className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-blue-800 transition">
+          <Link to="/store" className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-blue-800 transition">
             Explore Products
           </Link>
         </div>

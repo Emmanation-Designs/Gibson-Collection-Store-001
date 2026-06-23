@@ -79,7 +79,7 @@ export const Cart: React.FC = () => {
         </div>
         <h2 className="text-xl font-bold text-gray-800 mb-2">Your cart is empty</h2>
         <p className="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
-        <Link to="/" className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-blue-800 transition">
+        <Link to="/store" className="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-blue-800 transition">
           Start Shopping
         </Link>
       </div>
@@ -90,7 +90,7 @@ export const Cart: React.FC = () => {
     <div className="max-w-6xl mx-auto pb-10">
       <div className="flex items-center gap-2 mb-6">
         <button 
-          onClick={() => navigate('/')} 
+          onClick={() => navigate('/store')} 
           className="p-2 hover:bg-gray-100 rounded-full transition"
         >
           <ArrowLeft className="w-5 h-5 text-gray-600" />

@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase';
 import { Product, CATEGORIES, CATEGORY_IMAGES } from '../types';
 import { useStore } from '../store/useStore';
 import { Loader2, AlertCircle, RefreshCw, ArrowRight, Sparkles } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 const extractErrorMessage = (err: any): string => {
   if (!err) return 'An unknown error occurred.';
@@ -36,6 +36,7 @@ export const Home: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null); // State for Modal
   const { searchQuery } = useStore();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const categoryParam = searchParams.get('category');
@@ -239,7 +240,7 @@ export const Home: React.FC = () => {
                       key={product.id} 
                       product={product} 
                       onDelete={handleDeleteProduct}
-                      onClick={setSelectedProduct}
+                      onClick={(item) => navigate(`/product/${item.id}`)}
                     />
                   ))}
                 </div>
@@ -261,7 +262,7 @@ export const Home: React.FC = () => {
                       key={product.id} 
                       product={product} 
                       onDelete={handleDeleteProduct}
-                      onClick={setSelectedProduct}
+                      onClick={(item) => navigate(`/product/${item.id}`)}
                     />
                   ))
                 ) : (

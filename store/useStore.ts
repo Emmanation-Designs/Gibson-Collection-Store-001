@@ -12,7 +12,7 @@ interface AppState {
   
   setUser: (user: UserProfile | null) => void;
   setAuthReady: (ready: boolean) => void;
-  addToCart: (product: Product, selectedColor?: string) => void;
+  addToCart: (product: Product, selectedColor?: string, quantity?: number) => void;
   removeFromCart: (productId: string, selectedColor?: string) => void;
   updateQuantity: (productId: string, delta: number, selectedColor?: string) => void;
   clearCart: () => void;
@@ -32,7 +32,7 @@ export const useStore = create<AppState>()(
       setUser: (user) => set({ user }),
       setAuthReady: (ready) => set({ isAuthReady: ready }),
 
-      addToCart: (product, selectedColor) => set((state) => {
+      addToCart: (product, selectedColor, quantity = 1) => set((state) => {
         // Find item matching both ID and Color
         const existingIndex = state.cart.findIndex(
           (item) => item.id === product.id && item.selectedColor === selectedColor
@@ -40,11 +40,11 @@ export const useStore = create<AppState>()(
 
         if (existingIndex !== -1) {
           const newCart = [...state.cart];
-          newCart[existingIndex].quantity += 1;
+          newCart[existingIndex].quantity += quantity;
           return { cart: newCart };
         }
         
-        return { cart: [...state.cart, { ...product, quantity: 1, selectedColor }] };
+        return { cart: [...state.cart, { ...product, quantity, selectedColor }] };
       }),
 
       removeFromCart: (productId, selectedColor) => set((state) => ({

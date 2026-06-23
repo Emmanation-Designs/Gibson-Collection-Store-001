@@ -3,12 +3,16 @@ import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
+import { Landing } from './pages/Landing';
+import { About } from './pages/About';
+import { Contact } from './pages/Contact';
 import { Auth } from './pages/Auth';
 import { Upload } from './pages/Upload';
 import { Cart } from './pages/Cart';
 import { Profile } from './pages/Profile';
 import { Wishlist } from './pages/Wishlist';
 import { Categories } from './pages/Categories';
+import { ProductDetail } from './pages/ProductDetail';
 import { Settings } from './pages/Settings';
 import { Orders } from './pages/Orders';
 import { AdminLayout } from './components/AdminLayout';
@@ -94,10 +98,14 @@ const App: React.FC = () => {
       <Layout>
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/store" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />

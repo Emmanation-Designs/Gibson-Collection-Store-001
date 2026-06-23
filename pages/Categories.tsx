@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CATEGORY_CONFIG } from '../types';
+import { CATEGORY_CONFIG, CATEGORY_IMAGES } from '../types';
 import { ArrowLeft } from 'lucide-react';
 
 export const Categories: React.FC = () => {
@@ -9,7 +9,7 @@ export const Categories: React.FC = () => {
     <div className="max-w-4xl mx-auto pb-10">
       <div className="flex items-center gap-2 mb-6">
         <Link 
-          to="/" 
+          to="/store" 
           className="p-2 hover:bg-gray-100 rounded-full transition"
         >
           <ArrowLeft className="w-5 h-5 text-gray-600" />
@@ -21,11 +21,11 @@ export const Categories: React.FC = () => {
         {CATEGORY_CONFIG.map((category) => (
           <Link
             key={category.name}
-            to={`/?category=${encodeURIComponent(category.name)}`}
+            to={`/store?category=${encodeURIComponent(category.name)}`}
             className="block relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
           >
             <img 
-              src={category.image} 
+              src={CATEGORY_IMAGES[category.name] || category.image} 
               alt={category.name}
               className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
               loading="lazy"

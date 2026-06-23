@@ -11,7 +11,8 @@ import {
   LayoutDashboard,
   ArrowLeft,
   Settings,
-  Package
+  Package,
+  Globe
 } from 'lucide-react';
 import { ADMIN_EMAILS, WHATSAPP_NUMBER } from '../types';
 
@@ -122,6 +123,8 @@ export const Profile: React.FC = () => {
         <MenuItem icon={Heart} label="My Wishlist" to="/wishlist" />
         <div className="h-px bg-gray-50 my-1"></div>
         <MenuItem icon={Settings} label="Profile Settings" to="/settings" />
+        <div className="h-px bg-gray-50 my-1"></div>
+        <MenuItem icon={Globe} label="Visit Website (Landing Page)" to="/" />
         <div className="h-px bg-gray-50 my-1"></div>
         <button 
           onClick={handleSupport} 

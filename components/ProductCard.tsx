@@ -102,6 +102,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete, onC
     
     if (onClick) {
       onClick(product);
+    } else {
+      navigate(`/product/${product.id}`);
     }
   };
 
