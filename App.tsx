@@ -4,8 +4,24 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { Landing } from './pages/Landing';
-import { About } from './pages/About';
-import { Contact } from './pages/Contact';
+
+const RedirectToAbout: React.FC = () => {
+  useEffect(() => {
+    window.location.replace('/#/about');
+    const el = document.getElementById('about');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+  return null;
+};
+
+const RedirectToContact: React.FC = () => {
+  useEffect(() => {
+    window.location.replace('/#/contact');
+    const el = document.getElementById('contact');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+  return null;
+};
 import { Auth } from './pages/Auth';
 import { Upload } from './pages/Upload';
 import { Cart } from './pages/Cart';
@@ -100,8 +116,8 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/store" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<RedirectToAbout />} />
+          <Route path="/contact" element={<RedirectToContact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/categories" element={<Categories />} />

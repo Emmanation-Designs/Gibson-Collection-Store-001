@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore';
 import { Link, useLocation } from 'react-router-dom';
 import { 
@@ -39,6 +39,44 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   const [legalModal, setLegalModal] = useState<'privacy' | 'terms' | 'cookies' | null>(null);
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'testimonials', 'contact'];
+      const scrollPosition = window.scrollY + 140; // offset for sticky header
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Trigger initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
+
+  const handleScrollTo = (id: string) => {
+    if (location.pathname !== '/') {
+      window.location.href = `/#${id}`;
+      return;
+    }
+    const el = document.getElementById(id);
+    if (el) {
+      const topOffset = el.getBoundingClientRect().top + window.scrollY - 90;
+      window.scrollTo({ top: topOffset, behavior: 'smooth' });
+    }
+  };
 
   if (isAdminRoute) {
     return (
@@ -74,13 +112,51 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <nav className="hidden md:flex items-center gap-5 text-gray-600">
               {isCorporateMode ? (
                 <>
-                  <Link to="/" className={`hover:text-primary font-semibold text-sm transition ${location.pathname === '/' ? 'text-primary' : ''}`}>Home</Link>
-                  <Link to="/about" className={`hover:text-primary font-semibold text-sm transition ${location.pathname === '/about' ? 'text-primary' : ''}`}>About Us</Link>
-                  <Link to="/store" className="bg-[#ca4c1b] hover:bg-orange-850 text-white px-4 py-1.5 rounded-full font-bold text-sm transition flex items-center gap-1.5 shadow-sm">
-                    <ShoppingBag className="w-4 h-4" />
-                    <span>Shop Store</span>
+                  <button 
+                    onClick={() => handleScrollTo('home')} 
+                    className="hover:text-primary font-bold text-sm tracking-wide transition cursor-pointer relative py-1 focus:outline-none text-stone-500"
+                  >
+                    Home
+                    {activeSection === 'home' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                    )}
+                  </button>
+                  <button 
+                    onClick={() => handleScrollTo('about')} 
+                    className="hover:text-primary font-bold text-sm tracking-wide transition cursor-pointer relative py-1 focus:outline-none text-stone-500"
+                  >
+                    About Us
+                    {activeSection === 'about' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                    )}
+                  </button>
+                  <button 
+                    onClick={() => handleScrollTo('testimonials')} 
+                    className="hover:text-primary font-bold text-sm tracking-wide transition cursor-pointer relative py-1 focus:outline-none text-stone-500"
+                  >
+                    Testimonials
+                    {activeSection === 'testimonials' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                    )}
+                  </button>
+                  <button 
+                    onClick={() => handleScrollTo('contact')} 
+                    className="hover:text-primary font-bold text-sm tracking-wide transition cursor-pointer relative py-1 focus:outline-none text-stone-500"
+                  >
+                    Contact
+                    {activeSection === 'contact' && (
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                    )}
+                  </button>
+                  
+                  {/* Shop Now is placed at the last part of corporate mode, right before the divider! */}
+                  <Link 
+                    to="/store" 
+                    className="bg-[#ca4c1b] hover:bg-[#b83d14] text-white px-5 py-2 rounded-full font-bold text-xs tracking-wider uppercase transition duration-300 flex items-center gap-1.5 shadow-sm"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    <span>Shop Now</span>
                   </Link>
-                  <Link to="/contact" className={`hover:text-primary font-semibold text-sm transition ${location.pathname === '/contact' ? 'text-primary' : ''}`}>Contact</Link>
                 </>
               ) : (
                 <>
@@ -140,111 +216,113 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       </main>
 
       {/* Footer Section */}
-      <footer className="bg-[#ca4c1b] text-orange-100 pt-16 pb-24 md:pb-12 mt-auto border-t border-orange-850/40 relative z-10 font-sans">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
-            
-            {/* Column 1: Info & Brand */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <img 
-                  src="/logo.png" 
-                  alt="Gibson Empire Essentials" 
-                  className="w-10 h-10 object-cover rounded-full bg-white border border-orange-900/30" 
-                />
-                <span className="font-extrabold text-white text-md tracking-tight">Gibson Empire Essentials</span>
+      {!location.pathname.startsWith('/admin') && location.pathname !== '/store' && (
+        <footer className="bg-[#ca4c1b] text-orange-100 pt-16 pb-24 md:pb-12 mt-auto border-t border-orange-850/40 relative z-10 font-sans">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
+              
+              {/* Column 1: Info & Brand */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <img 
+                    src="/logo.png" 
+                    alt="Gibson Empire Essentials" 
+                    className="w-10 h-10 object-cover rounded-full bg-white border border-orange-900/30" 
+                  />
+                  <span className="font-extrabold text-white text-md tracking-tight">Gibson Empire Essentials</span>
+                </div>
+                <p className="text-xs text-orange-100/85 leading-relaxed font-medium">
+                  Pure fabric materials, strict organic safety tests, and ultimate baby luxury. Where Quality Meets Affection. Delivering daily nursery essentials straight to your family's doorstep.
+                </p>
+                <div className="flex items-center gap-1 text-[10px] text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20 w-fit">
+                  <Sparkles className="w-3 h-3 fill-current" />
+                  <span>Premium Quality Vetted</span>
+                </div>
               </div>
-              <p className="text-xs text-orange-100/85 leading-relaxed font-medium">
-                Pure fabric materials, strict organic safety tests, and ultimate baby luxury. Where Quality Meets Affection. Delivering daily nursery essentials straight to your family's doorstep.
+
+              {/* Column 2: Explore */}
+              <div className="space-y-4">
+                <h4 className="font-bold text-white text-sm uppercase tracking-wider">Explore</h4>
+                <ul className="space-y-2 text-xs font-semibold">
+                  <li>
+                    <Link to="/" className="text-orange-100/90 hover:text-white transition duration-200 block">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about" className="text-orange-100/90 hover:text-white transition duration-200 block">Our Mission & About</Link>
+                  </li>
+                  <li>
+                    <Link to="/store" className="text-orange-100/90 hover:text-white transition duration-200 block">How it Works & Store</Link>
+                  </li>
+                  <li>
+                    <Link to="/store" className="hover:text-white transition duration-200 block font-bold text-yellow-300">Our Premium Services</Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 3: Legal stuff */}
+              <div className="space-y-4">
+                <h4 className="font-bold text-white text-sm uppercase tracking-wider">Legal Notice</h4>
+                <div className="space-y-2 text-xs font-semibold flex flex-col items-start">
+                  <button 
+                    onClick={() => setLegalModal('privacy')}
+                    className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                  >
+                    Privacy Policy
+                  </button>
+                  <button 
+                    onClick={() => setLegalModal('terms')}
+                    className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                  >
+                    Terms of Service
+                  </button>
+                  <button 
+                    onClick={() => setLegalModal('cookies')}
+                    className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
+                  >
+                    Cookie Settings
+                  </button>
+                </div>
+              </div>
+
+              {/* Column 4: Contact / Reach Out */}
+              <div className="space-y-4">
+                <h4 className="font-bold text-white text-sm uppercase tracking-wider">Reach Out</h4>
+                <ul className="space-y-3.5 text-xs font-medium">
+                  <li className="flex items-start gap-2.5">
+                    <MapPin className="w-4 h-4 text-white shrink-0 mt-0.5" />
+                    <span className="text-orange-100/85 leading-relaxed">
+                      Saka bisiolu complex, ojuore market, oppositre under bridge. shop 123, ogun state, nigeria
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Mail className="w-4 h-4 text-white shrink-0" />
+                    <a href="mailto:gibsonempireessentials@gmail.com" className="text-orange-100/85 hover:text-white transition truncate">
+                      gibsonempireessentials@gmail.com
+                    </a>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <Phone className="w-4 h-4 text-white shrink-0" />
+                    <a href="https://wa.me/2348033464218" target="_blank" className="text-orange-100/85 hover:text-white transition">
+                      +234 803 346 4218
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <hr className="border-orange-850/50 my-8" />
+
+            {/* Copyright line */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-orange-200/70 font-medium">
+              <p>&copy; {new Date().getFullYear()} Gibson Empire Essentials. All rights reserved.</p>
+              <p className="flex items-center gap-1.5 bg-orange-950/20 px-3 py-1.5 rounded-lg text-white">
+                Designed with Affection & Premium Family Care
               </p>
-              <div className="flex items-center gap-1 text-[10px] text-emerald-300 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/20 w-fit">
-                <Sparkles className="w-3 h-3 fill-current" />
-                <span>Premium Quality Vetted</span>
-              </div>
             </div>
-
-            {/* Column 2: Explore */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Explore</h4>
-              <ul className="space-y-2 text-xs font-semibold">
-                <li>
-                  <Link to="/" className="text-orange-100/90 hover:text-white transition duration-200 block">Home</Link>
-                </li>
-                <li>
-                  <Link to="/about" className="text-orange-100/90 hover:text-white transition duration-200 block">Our Mission & About</Link>
-                </li>
-                <li>
-                  <Link to="/store" className="text-orange-100/90 hover:text-white transition duration-200 block">How it Works & Store</Link>
-                </li>
-                <li>
-                  <Link to="/store" className="hover:text-white transition duration-200 block font-bold text-yellow-300">Our Premium Services</Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: Legal stuff */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Legal Notice</h4>
-              <div className="space-y-2 text-xs font-semibold flex flex-col items-start">
-                <button 
-                  onClick={() => setLegalModal('privacy')}
-                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
-                >
-                  Privacy Policy
-                </button>
-                <button 
-                  onClick={() => setLegalModal('terms')}
-                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
-                >
-                  Terms of Service
-                </button>
-                <button 
-                  onClick={() => setLegalModal('cookies')}
-                  className="text-orange-100/90 hover:text-white transition duration-200 text-left cursor-pointer"
-                >
-                  Cookie Settings
-                </button>
-              </div>
-            </div>
-
-            {/* Column 4: Contact / Reach Out */}
-            <div className="space-y-4">
-              <h4 className="font-bold text-white text-sm uppercase tracking-wider">Reach Out</h4>
-              <ul className="space-y-3.5 text-xs font-medium">
-                <li className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                  <span className="text-orange-100/85 leading-relaxed">
-                    Saka bisiolu complex, ojuore market, oppositre under bridge. shop 123, ogun state, nigeria
-                  </span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Mail className="w-4 h-4 text-white shrink-0" />
-                  <a href="mailto:gibsonempireessentials@gmail.com" className="text-orange-100/85 hover:text-white transition truncate">
-                    gibsonempireessentials@gmail.com
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Phone className="w-4 h-4 text-white shrink-0" />
-                  <a href="https://wa.me/2348033464218" target="_blank" className="text-orange-100/85 hover:text-white transition">
-                    +234 803 346 4218
-                  </a>
-                </li>
-              </ul>
-            </div>
-
           </div>
-
-          <hr className="border-orange-850/50 my-8" />
-
-          {/* Copyright line */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-orange-200/70 font-medium">
-            <p>&copy; {new Date().getFullYear()} Gibson Empire Essentials. All rights reserved.</p>
-            <p className="flex items-center gap-1.5 bg-orange-950/20 px-3 py-1.5 rounded-lg text-white">
-              Designed with Affection & Premium Family Care
-            </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
 
       {/* Interactive Compliance legal modal */}
       {legalModal && (
@@ -336,22 +414,31 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-6 flex justify-between items-center md:hidden z-50">
         {isCorporateMode ? (
           <>
-            <Link to="/" className={`flex flex-col items-center gap-1 ${isActive('/')}`}>
+            <button 
+              onClick={() => handleScrollTo('home')} 
+              className={`flex flex-col items-center gap-1 focus:outline-none transition-colors ${activeSection === 'home' ? 'text-primary font-bold' : 'text-gray-400'}`}
+            >
               <Home className="w-6 h-6" />
               <span className="text-[10px] font-medium">Home</span>
-            </Link>
-            <Link to="/about" className={`flex flex-col items-center gap-1 ${isActive('/about')}`}>
+            </button>
+            <button 
+              onClick={() => handleScrollTo('about')} 
+              className={`flex flex-col items-center gap-1 focus:outline-none transition-colors ${activeSection === 'about' ? 'text-primary font-bold' : 'text-gray-400'}`}
+            >
               <Info className="w-6 h-6" />
               <span className="text-[10px] font-medium">About</span>
-            </Link>
-            <Link to="/store" className="flex flex-col items-center gap-1 text-[#10b981] font-bold">
+            </button>
+            <Link to="/store" className="flex flex-col items-center gap-1 text-[#ca4c1b] font-bold">
               <ShoppingBag className="w-6 h-6 stroke-[2.5]" />
               <span className="text-[10px] font-bold">Shop Now</span>
             </Link>
-            <Link to="/contact" className={`flex flex-col items-center gap-1 ${isActive('/contact')}`}>
+            <button 
+              onClick={() => handleScrollTo('contact')} 
+              className={`flex flex-col items-center gap-1 focus:outline-none transition-colors ${activeSection === 'contact' ? 'text-primary font-bold' : 'text-gray-400'}`}
+            >
               <Phone className="w-6 h-6" />
               <span className="text-[10px] font-medium">Contact</span>
-            </Link>
+            </button>
           </>
         ) : (
           <>

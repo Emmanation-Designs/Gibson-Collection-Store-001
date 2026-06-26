@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 import { Product, Review, CATEGORY_IMAGES, WHATSAPP_NUMBER } from '../types';
 import { useStore } from '../store/useStore';
 import { useToast } from '../store/useToast';
+import { ShareModal } from '../components/ShareModal';
 import { 
   Star, 
   Heart, 
@@ -22,7 +23,8 @@ import {
   Plus, 
   Minus,
   Send,
-  User
+  User,
+  Share2
 } from 'lucide-react';
 
 export const ProductDetail: React.FC = () => {
@@ -39,6 +41,9 @@ export const ProductDetail: React.FC = () => {
 
   // Gallery
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  // Sharing
+  const [showShare, setShowShare] = useState(false);
 
   // Selection state
   const [selectedColor, setSelectedColor] = useState<string>('');
@@ -451,6 +456,16 @@ Please confirm availability and coordinates. Thank you!`;
               >
                 <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-red-500' : ''}`} />
               </button>
+
+              {/* Share button */}
+              <button
+                onClick={() => setShowShare(true)}
+                className="w-14 h-14 rounded-2xl border border-gray-200 text-gray-400 hover:text-primary hover:bg-orange-50/50 hover:border-orange-100 flex items-center justify-center transition flex-shrink-0"
+                aria-label="Share product"
+                title="Share Product"
+              >
+                <Share2 className="w-6 h-6" />
+              </button>
             </div>
 
             {/* Direct WhatsApp purchasing CTA */}
@@ -772,6 +787,13 @@ Please confirm availability and coordinates. Thank you!`;
         </div>
 
       </section>
+
+      {showShare && (
+        <ShareModal 
+          product={product} 
+          onClose={() => setShowShare(false)} 
+        />
+      )}
 
     </div>
   );

@@ -124,7 +124,7 @@ export const Home: React.FC = () => {
           {selectedCategory === 'All' && (
             <div className="relative rounded-3xl overflow-hidden bg-primary shadow-xl">
               {/* Modern Gradient Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#172554] z-0"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ca4c1b] via-[#ea580c] to-[#7c2d12] z-0"></div>
               
               {/* Decorative Glows */}
               {/* Soft Pink glow to match baby image */}
