@@ -9,11 +9,13 @@ export interface Product {
   image_urls: string[];
   discount?: number; // Percentage (0-100)
   colors?: string[]; // Array of available colors
+  sizes?: string[]; // Array of available sizes
 }
 
 export interface CartItem extends Product {
   quantity: number;
   selectedColor?: string; // The specific color user chose
+  selectedSize?: string; // The specific size user chose
 }
 
 export interface Review {

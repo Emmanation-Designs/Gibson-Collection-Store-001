@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { useStore } from '../store/useStore';
 import { useToast } from '../store/useToast';
-import { Minus, Plus, Trash2, Rocket, ArrowLeft, Loader2 } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowLeft, Loader2, MessageSquare } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import { WHATSAPP_NUMBER } from '../types';
 
 export const Cart: React.FC = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, user } = useStore();
@@ -44,6 +45,7 @@ export const Cart: React.FC = () => {
           quantity: item.quantity,
           price: calculateItemPrice(item),
           color: item.selectedColor,
+          size: item.selectedSize,
           image: item.image_urls?.[0] || null
         })),
         status: 'pending'
@@ -53,15 +55,40 @@ export const Cart: React.FC = () => {
 
       if (error || !data) {
         console.error("Order error:", error);
-        addToast("Failed to submit order. Please try again.", "error");
+        addToast("Failed to save order database-side, but opening WhatsApp to complete your purchase.", "warning");
+      }
+
+      // Generate WhatsApp message
+      const orderId = data?.id || '';
+      const textTemplate = `Hello Gibson Empire Essentials! I would like to place an order:
+
+📋 *Order Details*:
+${cart.map((item, index) => {
+  const finalPrice = calculateItemPrice(item);
+  const colorStr = item.selectedColor ? `\n   - Color: ${item.selectedColor}` : '';
+  const sizeStr = item.selectedSize ? `\n   - Size: ${item.selectedSize}` : '';
+  return `${index + 1}. *${item.name}* (x${item.quantity}) - ₦${(finalPrice * item.quantity).toLocaleString()}${colorStr}${sizeStr}`;
+}).join('\n\n')}
+
+💰 *Total*: ₦${subtotal.toLocaleString()}
+📍 *Delivery Address*: ${address.trim()}
+📞 *Phone Number*: ${phone.trim()}
+${orderId ? `🆔 *Order Reference*: ${orderId}` : ''}
+
+Please confirm my order and send payment details. Thank you!`;
+
+      const encodedText = encodeURIComponent(textTemplate);
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+      
+      // Open WhatsApp
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      addToast("Order placed successfully! Opening WhatsApp...", "success");
+
+      clearCart();
+      if (user) {
+        navigate('/orders');
       } else {
-        addToast("Order placed successfully! Monitor your order status in your profile.", "success");
-        clearCart();
-        if (user) {
-          navigate('/orders');
-        } else {
-          navigate('/');
-        }
+        navigate('/');
       }
     } catch (err) {
       console.error(err);
@@ -104,7 +131,7 @@ export const Cart: React.FC = () => {
           {cart.map((item) => {
              const finalPrice = calculateItemPrice(item);
              return (
-              <div key={`${item.id}-${item.selectedColor || 'default'}`} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-4">
+              <div key={`${item.id}-${item.selectedColor || 'default'}-${item.selectedSize || 'default'}`} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-4">
                 <div className="w-24 h-24 bg-gray-50 rounded-lg flex-shrink-0 overflow-hidden relative">
                   <img 
                     src={item.image_urls?.[0] || `https://picsum.photos/seed/${item.id}/200`} 
@@ -124,15 +151,22 @@ export const Cart: React.FC = () => {
                       <h3 className="font-semibold text-gray-800 line-clamp-1">{item.name}</h3>
                       <div className="flex flex-col gap-1">
                         <p className="text-sm text-gray-500">{item.category}</p>
-                        {item.selectedColor && (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 w-fit">
-                            Color: {item.selectedColor}
-                          </span>
-                        )}
+                        <div className="flex flex-wrap gap-1.5 mt-1">
+                          {item.selectedColor && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-stone-100 text-stone-800">
+                              Color: {item.selectedColor}
+                            </span>
+                          )}
+                          {item.selectedSize && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 border border-amber-100 text-[#ca4c1b]">
+                              Size: {item.selectedSize}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <button 
-                      onClick={() => removeFromCart(item.id, item.selectedColor)}
+                      onClick={() => removeFromCart(item.id, item.selectedColor, item.selectedSize)}
                       className="text-gray-400 hover:text-red-500 transition"
                     >
                       <Trash2 className="w-5 h-5" />
@@ -142,14 +176,14 @@ export const Cart: React.FC = () => {
                   <div className="flex justify-between items-end mt-2">
                     <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
                       <button 
-                        onClick={() => updateQuantity(item.id, -1, item.selectedColor)}
+                        onClick={() => updateQuantity(item.id, -1, item.selectedColor, item.selectedSize)}
                         className="p-1 hover:bg-white rounded-md transition shadow-sm"
                       >
                         <Minus className="w-4 h-4 text-gray-600" />
                       </button>
                       <span className="font-medium text-gray-700 w-6 text-center">{item.quantity}</span>
                       <button 
-                        onClick={() => updateQuantity(item.id, 1, item.selectedColor)}
+                        onClick={() => updateQuantity(item.id, 1, item.selectedColor, item.selectedSize)}
                         className="p-1 hover:bg-white rounded-md transition shadow-sm"
                       >
                         <Plus className="w-4 h-4 text-gray-600" />
@@ -215,7 +249,7 @@ export const Cart: React.FC = () => {
             <button
               onClick={handleCheckout}
               disabled={isSubmitting}
-              className={`w-full bg-primary hover:bg-blue-800 text-white py-4 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 ${
+              className={`w-full bg-[#25d366] hover:bg-[#20ba56] text-white py-4 rounded-xl font-bold shadow-lg transition flex items-center justify-center gap-2 ${
                 isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >
@@ -226,14 +260,14 @@ export const Cart: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <Rocket className="w-5 h-5" />
-                  Place Order Now
+                  <MessageSquare className="w-5 h-5 fill-current" />
+                  Checkout via WhatsApp
                 </>
               )}
             </button>
             
             <p className="text-xs text-center text-gray-500 mt-4">
-              By placing this order, you agree to our delivery terms. We will contact you at the provided phone number.
+              Your order details will be pre-filled to message us directly on WhatsApp for instant confirmation.
             </p>
           </div>
         </div>

@@ -54,8 +54,10 @@ export const Auth: React.FC = () => {
         if (error) throw error;
         if (data.user && data.user.email) {
           setUser({ id: data.user.id, email: data.user.email });
+          localStorage.setItem('hasSeenLanding', 'true');
+          localStorage.removeItem('overrideLanding');
           addToast("Welcome back!", "success");
-          navigate('/');
+          navigate('/store');
         }
       } else {
         const { data, error } = await supabase.auth.signUp({
@@ -65,8 +67,10 @@ export const Auth: React.FC = () => {
         if (error) throw error;
         if (data.user && data.user.email) {
             setUser({ id: data.user.id, email: data.user.email });
+            localStorage.setItem('hasSeenLanding', 'true');
+            localStorage.removeItem('overrideLanding');
             addToast("Account created successfully! Welcome to Gibson Empire Essentials.", "success");
-            navigate('/');
+            navigate('/store');
         }
       }
     } catch (err: any) {

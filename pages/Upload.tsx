@@ -5,7 +5,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CATEGORIES, ADMIN_EMAILS } from '../types';
 import { useStore } from '../store/useStore';
 import { useToast } from '../store/useToast';
-import { Upload as UploadIcon, X, Loader2, ArrowLeft, Tag, DollarSign, Layers, FileText, Image as ImageIcon, Percent, Palette } from 'lucide-react';
+import { Upload as UploadIcon, X, Loader2, ArrowLeft, Tag, DollarSign, Layers, FileText, Image as ImageIcon, Percent, Palette, Ruler } from 'lucide-react';
+
+const SIZE_CHARTS = {
+  'Clothing': ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+  'Shoes': ['38', '39', '40', '41', '42', '43', '44', '45'],
+  'Baby/Diapers': ['Newborn', 'Size 1', 'Size 2', 'Size 3', 'Size 4', 'Size 5', 'Size 6'],
+  'General': ['Small', 'Medium', 'Large', 'One Size', 'Free Size']
+};
 
 const extractErrorMessage = (err: any): string => {
   if (!err) return 'An unknown error occurred.';
@@ -42,6 +49,8 @@ export const Upload: React.FC = () => {
   // New States for Discount and Colors
   const [discount, setDiscount] = useState('');
   const [colors, setColors] = useState(''); // Store as comma separated string for input
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
 
   const [uploading, setUploading] = useState(false);
   const [fetching, setFetching] = useState(!!editId);
@@ -96,6 +105,7 @@ export const Upload: React.FC = () => {
           // Populate new fields
           setDiscount(data.discount ? data.discount.toString() : '');
           setColors(data.colors ? data.colors.join(', ') : '');
+          setSelectedSizes(data.sizes || []);
         }
       } catch (err) {
         console.error("Error fetching product:", err);
@@ -193,7 +203,8 @@ export const Upload: React.FC = () => {
         description,
         image_urls: finalImages,
         discount: discount ? parseFloat(discount) : 0,
-        colors: colorArray // Save the array to Supabase
+        colors: colorArray, // Save the array to Supabase
+        sizes: selectedSizes
       };
 
       if (editId) {
@@ -351,6 +362,51 @@ export const Upload: React.FC = () => {
               </p>
             </div>
 
+            {/* Available Sizes Section */}
+            <div className="bg-amber-50/40 p-5 rounded-2xl border border-amber-150/60">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <div>
+                  <label className="text-sm font-black text-stone-900 flex items-center gap-2">
+                    <Ruler className="w-4 h-4 text-[#ca4c1b]" /> Available Sizes
+                  </label>
+                  <p className="text-xs text-stone-500 mt-1">
+                    Select the sizes applicable for this product.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsSizeModalOpen(true)}
+                  className="bg-stone-900 text-white hover:bg-stone-850 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shrink-0 cursor-pointer shadow-sm"
+                >
+                  Select Sizes
+                </button>
+              </div>
+
+              {selectedSizes.length === 0 ? (
+                <div className="text-center py-4 border border-dashed border-stone-200 rounded-xl bg-white/50 text-stone-400 text-xs font-semibold">
+                  No sizes selected. This product will not show size options.
+                </div>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {selectedSizes.map((size) => (
+                    <span 
+                      key={size} 
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white border border-stone-200/60 shadow-xs text-xs font-bold text-stone-850"
+                    >
+                      {size}
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSizes(prev => prev.filter(s => s !== size))}
+                        className="text-stone-400 hover:text-red-500 transition-colors ml-1"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-gray-400" /> Category
@@ -387,6 +443,84 @@ export const Upload: React.FC = () => {
           </button>
         </form>
       </div>
+      
+      {/* Sizes Selection Modal */}
+      {isSizeModalOpen && (
+        <div className="fixed inset-0 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-[2.5rem] border border-stone-200/40 shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col max-h-[90vh]">
+            
+            {/* Modal Header */}
+            <div className="p-6 md:p-8 border-b border-stone-100 flex items-center justify-between bg-stone-50/50">
+              <div>
+                <h3 className="text-lg font-black text-stone-900 flex items-center gap-2">
+                  <Ruler className="w-5 h-5 text-[#ca4c1b]" /> Select Product Sizes
+                </h3>
+                <p className="text-xs text-stone-500 mt-1">Select sizes from relevant categories.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsSizeModalOpen(false)}
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors font-bold cursor-pointer"
+              >
+                <X className="w-5 h-5 text-stone-500" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 md:p-8 overflow-y-auto space-y-6 flex-grow">
+              {Object.entries(SIZE_CHARTS).map(([chartName, sizesList]) => (
+                <div key={chartName} className="space-y-3 pb-6 border-b border-stone-100 last:border-0 last:pb-0">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-stone-400">
+                    {chartName} Chart
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {sizesList.map((size) => {
+                      const isSelected = selectedSizes.includes(size);
+                      return (
+                        <button
+                          key={size}
+                          type="button"
+                          onClick={() => {
+                            if (isSelected) {
+                              setSelectedSizes(prev => prev.filter(s => s !== size));
+                            } else {
+                              setSelectedSizes(prev => [...prev, size]);
+                            }
+                          }}
+                          className={`px-4 py-3 rounded-xl border text-xs font-bold transition-all text-center flex items-center justify-center gap-2 cursor-pointer ${
+                            isSelected
+                              ? 'bg-stone-900 text-white border-stone-900 shadow-md'
+                              : 'bg-stone-50 text-stone-600 border-stone-200/60 hover:bg-stone-100'
+                          }`}
+                        >
+                          <span className={`w-3.5 h-3.5 rounded-md border flex items-center justify-center ${
+                            isSelected ? 'border-white bg-white/20' : 'border-stone-300 bg-white'
+                          }`}>
+                            {isSelected && <span className="w-1.5 h-1.5 bg-white rounded-full"></span>}
+                          </span>
+                          {size}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-stone-100 bg-stone-50/50 flex items-center justify-end">
+              <button
+                type="button"
+                onClick={() => setIsSizeModalOpen(false)}
+                className="bg-[#ca4c1b] hover:bg-[#b83d14] text-white px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+              >
+                Done Selecting ({selectedSizes.length})
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };

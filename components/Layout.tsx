@@ -152,6 +152,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                   {/* Shop Now is placed at the last part of corporate mode, right before the divider! */}
                   <Link 
                     to="/store" 
+                    onClick={() => {
+                      localStorage.setItem('hasSeenLanding', 'true');
+                      localStorage.removeItem('overrideLanding');
+                    }}
                     className="bg-[#ca4c1b] hover:bg-[#b83d14] text-white px-5 py-2 rounded-full font-bold text-xs tracking-wider uppercase transition duration-300 flex items-center gap-1.5 shadow-sm"
                   >
                     <ShoppingBag className="w-3.5 h-3.5" />
@@ -428,7 +432,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
               <Info className="w-6 h-6" />
               <span className="text-[10px] font-medium">About</span>
             </button>
-            <Link to="/store" className="flex flex-col items-center gap-1 text-[#ca4c1b] font-bold">
+            <Link 
+              to="/store" 
+              onClick={() => {
+                localStorage.setItem('hasSeenLanding', 'true');
+                localStorage.removeItem('overrideLanding');
+              }}
+              className="flex flex-col items-center gap-1 text-[#ca4c1b] font-bold"
+            >
               <ShoppingBag className="w-6 h-6 stroke-[2.5]" />
               <span className="text-[10px] font-bold">Shop Now</span>
             </Link>

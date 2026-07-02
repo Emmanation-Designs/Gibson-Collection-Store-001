@@ -34,7 +34,6 @@ import { Orders } from './pages/Orders';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminOrders } from './pages/AdminOrders';
-import { AdminFab } from './components/AdminFab';
 import { ToastContainer } from './components/ToastContainer';
 import { useStore } from './store/useStore';
 import { supabase } from './lib/supabase';
@@ -87,6 +86,8 @@ const App: React.FC = () => {
           full_name: session.user.user_metadata?.full_name,
           avatar_url: session.user.user_metadata?.avatar_url
         });
+        localStorage.setItem('hasSeenLanding', 'true');
+        localStorage.removeItem('overrideLanding');
       } else {
         setUser(null);
       }
@@ -136,7 +137,6 @@ const App: React.FC = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        <AdminFab />
       </Layout>
     </Router>
   );

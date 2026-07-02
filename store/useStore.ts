@@ -12,9 +12,9 @@ interface AppState {
   
   setUser: (user: UserProfile | null) => void;
   setAuthReady: (ready: boolean) => void;
-  addToCart: (product: Product, selectedColor?: string, quantity?: number) => void;
-  removeFromCart: (productId: string, selectedColor?: string) => void;
-  updateQuantity: (productId: string, delta: number, selectedColor?: string) => void;
+  addToCart: (product: Product, selectedColor?: string, selectedSize?: string, quantity?: number) => void;
+  removeFromCart: (productId: string, selectedColor?: string, selectedSize?: string) => void;
+  updateQuantity: (productId: string, delta: number, selectedColor?: string, selectedSize?: string) => void;
   clearCart: () => void;
   toggleWishlist: (productId: string) => void;
   setSearchQuery: (query: string) => void;
@@ -32,10 +32,12 @@ export const useStore = create<AppState>()(
       setUser: (user) => set({ user }),
       setAuthReady: (ready) => set({ isAuthReady: ready }),
 
-      addToCart: (product, selectedColor, quantity = 1) => set((state) => {
-        // Find item matching both ID and Color
+      addToCart: (product, selectedColor, selectedSize, quantity = 1) => set((state) => {
+        // Find item matching ID, Color, and Size
         const existingIndex = state.cart.findIndex(
-          (item) => item.id === product.id && item.selectedColor === selectedColor
+          (item) => item.id === product.id && 
+                    item.selectedColor === selectedColor && 
+                    item.selectedSize === selectedSize
         );
 
         if (existingIndex !== -1) {
@@ -44,16 +46,24 @@ export const useStore = create<AppState>()(
           return { cart: newCart };
         }
         
-        return { cart: [...state.cart, { ...product, quantity, selectedColor }] };
+        return { cart: [...state.cart, { ...product, quantity, selectedColor, selectedSize }] };
       }),
 
-      removeFromCart: (productId, selectedColor) => set((state) => ({
-        cart: state.cart.filter((item) => !(item.id === productId && item.selectedColor === selectedColor)),
+      removeFromCart: (productId, selectedColor, selectedSize) => set((state) => ({
+        cart: state.cart.filter((item) => !(
+          item.id === productId && 
+          item.selectedColor === selectedColor && 
+          item.selectedSize === selectedSize
+        )),
       })),
 
-      updateQuantity: (productId, delta, selectedColor) => set((state) => ({
+      updateQuantity: (productId, delta, selectedColor, selectedSize) => set((state) => ({
         cart: state.cart.map((item) => {
-          if (item.id === productId && item.selectedColor === selectedColor) {
+          if (
+            item.id === productId && 
+            item.selectedColor === selectedColor && 
+            item.selectedSize === selectedSize
+          ) {
             const newQty = Math.max(1, item.quantity + delta);
             return { ...item, quantity: newQty };
           }

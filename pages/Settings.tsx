@@ -143,7 +143,7 @@ export const Settings: React.FC = () => {
           <button
             type="submit"
             disabled={saving || uploading}
-            className="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-blue-800 transition flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 disabled:opacity-70"
+            className="w-full bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-[#b83d14] transition flex items-center justify-center gap-2 shadow-lg shadow-orange-900/10 disabled:opacity-70 cursor-pointer"
           >
             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
             Save Changes

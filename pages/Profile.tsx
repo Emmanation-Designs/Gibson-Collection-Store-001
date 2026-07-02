@@ -44,14 +44,14 @@ export const Profile: React.FC = () => {
               <ArrowLeft className="w-5 h-5" /> Back to Home
             </button>
         </div>
-        <div className="bg-blue-50 p-4 rounded-full mb-4 mt-10">
+        <div className="bg-orange-50 p-4 rounded-full mb-4 mt-10">
           <User className="w-12 h-12 text-primary" />
         </div>
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Not Logged In</h2>
         <p className="text-gray-500 mb-6 text-center">Login to view your wishlist and manage your account.</p>
         <Link 
           to="/auth" 
-          className="bg-primary text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition shadow-lg w-full max-w-xs text-center"
+          className="bg-primary text-white px-8 py-3 rounded-xl font-bold hover:bg-[#b83d14] transition shadow-lg w-full max-w-xs text-center"
         >
           Login / Sign Up
         </Link>
@@ -101,17 +101,17 @@ export const Profile: React.FC = () => {
       {isAdmin && (
         <div className="mb-6">
           <Link 
-            to="/admin/upload" 
-            className="flex items-center gap-4 bg-gradient-to-r from-blue-900 to-blue-700 text-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95"
+            to="/admin/dashboard" 
+            className="flex items-center gap-4 bg-gradient-to-r from-[#ca4c1b] to-[#ea580c] text-white p-4 rounded-2xl shadow-lg hover:shadow-xl transition transform active:scale-95 cursor-pointer"
           >
             <div className="bg-white/20 p-2 rounded-lg">
               <LayoutDashboard className="w-6 h-6" />
             </div>
             <div className="flex-1">
               <h3 className="font-bold">Admin Dashboard</h3>
-              <p className="text-blue-100 text-sm">Manage products & inventory</p>
+              <p className="text-orange-100 text-xs mt-0.5">Manage products, view inventory, and check orders</p>
             </div>
-            <ChevronRight className="w-5 h-5 text-blue-200" />
+            <ChevronRight className="w-5 h-5 text-orange-200" />
           </Link>
         </div>
       )}
@@ -124,8 +124,6 @@ export const Profile: React.FC = () => {
         <div className="h-px bg-gray-50 my-1"></div>
         <MenuItem icon={Settings} label="Profile Settings" to="/settings" />
         <div className="h-px bg-gray-50 my-1"></div>
-        <MenuItem icon={Globe} label="Visit Website (Landing Page)" to="/" />
-        <div className="h-px bg-gray-50 my-1"></div>
         <button 
           onClick={handleSupport} 
           className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition text-left"
@@ -135,6 +133,30 @@ export const Profile: React.FC = () => {
           </div>
           <span className="flex-1 font-medium text-gray-700">WhatsApp Support</span>
           <ChevronRight className="w-4 h-4 text-gray-300" />
+        </button>
+      </div>
+
+      {/* Prominent Visit Landing Page Banner */}
+      <div className="bg-stone-50 border border-stone-200/60 rounded-2xl p-5 mb-6 text-center space-y-3 shadow-xs">
+        <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center mx-auto text-[#ca4c1b]">
+          <Globe className="w-5 h-5" />
+        </div>
+        <div className="space-y-1">
+          <h4 className="font-bold text-gray-900 text-sm">Want to see the Introduction?</h4>
+          <p className="text-[11px] text-gray-500 leading-relaxed max-w-md mx-auto">
+            Click below to return to the root landing page. This will temporarily reset your default homepage setting.
+          </p>
+        </div>
+        <button 
+          onClick={() => {
+            localStorage.setItem('overrideLanding', 'true');
+            localStorage.removeItem('hasSeenLanding');
+            navigate('/');
+          }}
+          className="w-full h-11 bg-stone-900 hover:bg-stone-800 text-white font-bold rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <Globe className="w-4 h-4" />
+          Visit Landing Page (Reset Default View)
         </button>
       </div>
 

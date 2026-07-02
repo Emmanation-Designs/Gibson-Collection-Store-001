@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useStore } from '../store/useStore';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -15,6 +16,23 @@ import {
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate();
+  const { user, isAuthReady } = useStore();
+
+  // Redirect returning users to /store
+  useEffect(() => {
+    if (isAuthReady) {
+      const hasSeenLanding = localStorage.getItem('hasSeenLanding') === 'true';
+      const overrideLanding = localStorage.getItem('overrideLanding') === 'true';
+      if ((user || hasSeenLanding) && !overrideLanding) {
+        navigate('/store');
+      }
+    }
+  }, [user, isAuthReady, navigate]);
+
+  const handleEnterStore = () => {
+    localStorage.setItem('hasSeenLanding', 'true');
+    localStorage.removeItem('overrideLanding');
+  };
 
   // Scroll to hash on mount if present
   useEffect(() => {
@@ -108,6 +126,7 @@ export const Landing: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
                 <Link 
                   to="/store"
+                  onClick={handleEnterStore}
                   className="bg-[#ca4c1b] hover:bg-[#b83d14] text-white px-9 py-4.5 rounded-full font-extrabold text-xs tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2.5"
                 >
                   Explore The Boutique <ArrowRight className="w-4 h-4" />
@@ -288,6 +307,7 @@ export const Landing: React.FC = () => {
             <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link 
                 to="/store"
+                onClick={handleEnterStore}
                 className="bg-[#ca4c1b] hover:bg-[#b83d14] text-white px-9 py-4 rounded-full font-bold text-xs tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 shrink-0"
               >
                 Shop Our Collection <ShoppingBag className="w-4 h-4" />
